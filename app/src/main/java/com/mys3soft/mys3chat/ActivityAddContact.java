@@ -41,7 +41,7 @@ public class ActivityAddContact extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contact);
         pd = new ProgressDialog(this);
-        pd.setMessage("Seraching...");
+        pd.setMessage("Searching...");
         lv_SerachList = (ListView) findViewById(R.id.lv_AddContactList);
         searchKey = (EditText) findViewById(R.id.et_SearchKey);
         // listener for item click

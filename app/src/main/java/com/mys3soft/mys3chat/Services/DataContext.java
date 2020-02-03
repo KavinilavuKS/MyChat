@@ -27,7 +27,7 @@ Tables:
 public class DataContext extends SQLiteOpenHelper {
 
     public DataContext(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, "mys3chat.db", factory, 3);
+        super(context, "chat.db", factory, 3);
     }
 
     @Override

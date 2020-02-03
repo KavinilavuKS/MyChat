@@ -38,7 +38,7 @@ import retrofit2.Call;
 public class ActivityRegister extends AppCompatActivity {
 
 
-    EditText et_Email, et_Password, et_FirstName, et_LastName;
+    EditText et_Email, et_Password, et_FirstName, et_LastName, phone, emergency;
     Button btn_Register;
     ProgressDialog pd;
     String email;
@@ -54,6 +54,8 @@ public class ActivityRegister extends AppCompatActivity {
         pd.setMessage("Loading...");
 
         et_Email = (EditText) findViewById(R.id.et_Email_Rigister);
+        phone = (EditText) findViewById(R.id.phone);
+        emergency = (EditText) findViewById(R.id.Emergency);
         et_Password = (EditText) findViewById(R.id.et_Password_Rigister);
         et_FirstName = (EditText) findViewById(R.id.et_FirstName_Rigister);
         et_LastName = (EditText) findViewById(R.id.et_LastName_Rigister);
@@ -71,7 +73,12 @@ public class ActivityRegister extends AppCompatActivity {
             et_Email.setError("Enter Valid Email");
         } else if (et_Password.getText().toString().equals("")) {
             et_Password.setError("Enter Password");
-        } else {
+        }  else if (phone.getText().toString().equals("")) {
+            phone.setError("Enter Phone Number");
+        }
+        else if (emergency.getText().toString().equals("")) {
+            emergency.setError("Enter Emergency Number");
+        }else {
             email = Tools.encodeString(et_Email.getText().toString());
             RegisterUserTask t = new RegisterUserTask();
             t.execute();
@@ -107,6 +114,8 @@ public class ActivityRegister extends AppCompatActivity {
                     firebase.child(email).child("FirstName").setValue(et_FirstName.getText().toString());
                     firebase.child(email).child("LastName").setValue(et_LastName.getText().toString());
                     firebase.child(email).child("Email").setValue(email);
+                    firebase.child(email).child("Phone").setValue(phone.getText().toString());
+                    firebase.child(email).child("Emergency").setValue(emergency.getText().toString());
                     firebase.child(email).child("Password").setValue(et_Password.getText().toString());
                     DateFormat dateFormat = new SimpleDateFormat("dd MM yy hh:mm a");
                     Date date = new Date();

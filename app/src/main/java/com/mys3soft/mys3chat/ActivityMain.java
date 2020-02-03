@@ -303,7 +303,7 @@ public class ActivityMain extends AppCompatActivity {
         }
 
         if (id == R.id.menu_refresh) {
-            
+
             if (Tools.isNetworkAvailable(this)){
 
                 FriendListTask t = new FriendListTask();
@@ -311,7 +311,7 @@ public class ActivityMain extends AppCompatActivity {
             }else {
                 Toast.makeText(this, "Please check your internet connection.", Toast.LENGTH_SHORT).show();
             }
-            
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -417,62 +417,52 @@ public class ActivityMain extends AppCompatActivity {
 
                 return rootView;
             }
-            // Contacts tab
-            else {
-                rootView = inflater.inflate(R.layout.fragment_contact, container, false);
-                userFriendList = db.getUserFriendList();
-                ListAdapter adp = new FriendListAdapter(getActivity(), userFriendList);
-                ListView lv_FriendList = (ListView) rootView.findViewById(R.id.lv_FriendList);
-                lv_FriendList.setAdapter(adp);
-                lv_FriendList.setOnItemClickListener(
+            if (getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
+                rootView = inflater.inflate(R.layout.fragment_chat, container, false);
+                userLastChatList = db.getUserLastChatList(user.Email);
+                ListAdapter adp = new AdapterLastChat(getActivity(), userLastChatList);
+                lv_LastChatList = (ListView) rootView.findViewById(R.id.lv_LastChatList);
+                lv_LastChatList.setAdapter(adp);
+                lv_LastChatList.setOnItemClickListener(
                         new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                TextView email = (TextView) view.findViewById(R.id.tv_HiddenEmail);
-                                TextView tv_Name = (TextView) view.findViewById(R.id.tv_FriendFullName);
+                                TextView email = (TextView) view.findViewById(R.id.tv_lastChat_HiddenEmail);
+                                TextView tv_Name = (TextView) view.findViewById(R.id.tv_lastChat_FriendFullName);
                                 Intent intend = new Intent(getActivity(), ActivityChat.class);
                                 intend.putExtra("FriendEmail", email.getText().toString());
                                 intend.putExtra("FriendFullName", tv_Name.getText().toString());
                                 startActivity(intend);
                             }
                         }
-
                 );
 
-                lv_FriendList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                lv_LastChatList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                     @Override
                     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                        if (userFriendList.size() <= position) return false;
-                        final User selectedUser = userFriendList.get(position);
-                        final CharSequence options[] = new CharSequence[]{"Profile", "Delete Contact"};
+                        if (userLastChatList.size() <= position) return false;
+                        final Message selectedMessageItem = userLastChatList.get(position);
+                        final CharSequence options[] = new CharSequence[]{"Delete Chat"};
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setTitle(selectedUser.FirstName + " " + selectedUser.LastName);
+                        builder.setTitle(selectedMessageItem.FriendFullName);
                         builder.setItems(options, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int index) {
                                 // the user clicked on list[index]
                                 if (index == 0) {
-                                    // Profile
-                                    Intent intent = new Intent(getActivity(), ActivityFriendProfile.class);
-                                    intent.putExtra("Email", selectedUser.Email);
-                                    startActivityForResult(intent, StaticInfo.ChatAciviityRequestCode);
-                                } else {
-                                    // Delete Contact
+                                    // Delete Chat
                                     new AlertDialog.Builder(getActivity())
-                                            .setTitle(selectedUser.FirstName + " " + selectedUser.LastName)
-                                            .setMessage("Are you sure to delete this contact?")
+                                            .setTitle(selectedMessageItem.FriendFullName)
+                                            .setMessage("Are you sure to delete this chat?")
                                             .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
-                                                    Firebase ref = new Firebase(StaticInfo.EndPoint + "/friends/" + user.Email + "/" + selectedUser.Email);
-                                                    ref.removeValue();
-                                                    // delete from local database
-                                                    db.deleteFriendByEmailFromLocalDB(selectedUser.Email);
-                                                    Toast.makeText(getActivity(), "Contact deleted successfully", Toast.LENGTH_SHORT).show();
-                                                    userFriendList = db.getUserFriendList();
-                                                    ListAdapter adp = new FriendListAdapter(getActivity(), userFriendList);
-                                                    ListView lv_FriendList = (ListView) rootView.findViewById(R.id.lv_FriendList);
-                                                    lv_FriendList.setAdapter(adp);
+                                                    db.deleteChat(user.Email, selectedMessageItem.FromMail);
+                                                    Toast.makeText(getActivity(), "Chat deleted successfully", Toast.LENGTH_SHORT).show();
+                                                    userLastChatList = db.getUserLastChatList(user.Email);
+                                                    ListAdapter adp = new AdapterLastChat(getActivity(), userLastChatList);
+                                                    lv_LastChatList = (ListView) rootView.findViewById(R.id.lv_LastChatList);
+                                                    lv_LastChatList.setAdapter(adp);
                                                 }
                                             })
                                             .setNegativeButton(android.R.string.no, null)
@@ -490,10 +480,31 @@ public class ActivityMain extends AppCompatActivity {
 
                         builder.show();
 
-
                         return true;
                     }
                 });
+
+                return rootView;
+            }
+
+            //88888888888888888888888888888888888888888888888888888888888888888888888888888888
+
+            else if (getArguments().getInt(ARG_SECTION_NUMBER) == 2) {
+                rootView = inflater.inflate(R.layout.fragment_cam, container, false);
+                return rootView;
+            }
+
+            //888888888888888888888888888888888888888888888888888888888888888888888888888888888
+
+            else if (getArguments().getInt(ARG_SECTION_NUMBER) == 3) {
+                rootView = inflater.inflate(R.layout.fragment_moment, container, false);
+                return rootView;
+            }
+
+            //000000000000000000000000000000000000000000000000000000000000000000000000000000000
+            // Contacts tab
+            else {
+                rootView = inflater.inflate(R.layout.fragment_calls, container, false);
                 return rootView;
             }
 
@@ -515,16 +526,22 @@ public class ActivityMain extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return 2;
+            return 4;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "CHATS";
+                    return "CHAT";
                 case 1:
-                    return "CONTACTS";
+                    return "CAMERA";
+                case 2:
+                    return "MOMENTS";
+                case 3:
+                    return "CALLS";
+
+
             }
             return null;
         }

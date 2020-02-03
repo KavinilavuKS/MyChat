@@ -127,7 +127,7 @@ public class ActivityFriendProfile extends AppCompatActivity {
     }
 
     public void btn_SendFriendRequestClick(View view) {
-        Firebase firebase = new Firebase("https://mys3chat.firebaseio.com/friendrequests");
+        Firebase firebase = new Firebase("https://chat-36c8b.firebaseio.com/friendrequests");
         Firebase notifRef = new Firebase(StaticInfo.NotificationEndPoint + "/" + friendEmail);
         Map<String, String> map = new HashMap<>();
         map.put("FirstName", user.FirstName);

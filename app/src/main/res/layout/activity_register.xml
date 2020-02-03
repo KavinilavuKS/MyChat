@@ -45,6 +45,23 @@
                 android:inputType="textEmailAddress"
                 android:maxLines="1" />
             <EditText
+                android:id="@+id/phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dip"
+                android:hint="Phone number..."
+                android:inputType="number"
+                android:maxLines="1" />
+            <EditText
+                android:id="@+id/Emergency"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dip"
+                android:hint="Emergency number..."
+                android:inputType="number"
+                android:maxLines="1" />
+
+            <EditText
                 android:id="@+id/et_Password_Rigister"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

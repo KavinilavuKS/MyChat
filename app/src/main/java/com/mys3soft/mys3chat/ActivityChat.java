@@ -458,7 +458,7 @@ public class ActivityChat extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.menu_deleteConservation) {
+      /*  if (id == R.id.menu_deleteConservation) {
             new AlertDialog.Builder(this)
                     .setTitle(friendFullName)
                     .setMessage("Are you sure to delete this chat?")
@@ -472,7 +472,7 @@ public class ActivityChat extends AppCompatActivity {
                     .setNegativeButton(android.R.string.no, null)
                     .show();
             return true;
-        }
+        }*/
         if (id == R.id.menu_deleteContact) {
             new AlertDialog.Builder(this)
                     .setTitle(friendFullName)

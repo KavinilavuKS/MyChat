@@ -6,11 +6,15 @@
 
 
     <item
-        android:id="@+id/menu_deleteConservation"
-        app:showAsAction="always"
+        android:id="@+id/menu_video"
+        android:icon="@android:drawable/presence_video_away"
         android:title="Clear Conservation"
-        android:icon="@android:drawable/ic_menu_delete"
-        />
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/menu_voice"
+        android:icon="@android:drawable/stat_sys_phone_call"
+        android:title="Clear Conservation"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/menu_friendProfile"

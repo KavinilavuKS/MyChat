@@ -15,7 +15,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class Tools {
 
-    public static final String ENDPOINT = "https://mys3chat.firebaseio.com";
+    public static final String ENDPOINT = "https://chat-36c8b.firebaseio.com";
 
     public static String encodeString(String string) {
         return string.replace(".", ",");

@@ -36,9 +36,9 @@ public class ActivityLogin extends AppCompatActivity {
     DataContext db = new DataContext(this, null, null, 1);
 
 
-    EditText et_Email, et_Password;
+    EditText et_Email, phone,et_Password;
     Button btn_Login;
-    public static final String ENDPOINT = "https://mys3chat.firebaseio.com";
+    public static final String ENDPOINT = "https://chat-36c8b.firebaseio.com";
     ProgressDialog pd;
     String email;
 
@@ -48,6 +48,7 @@ public class ActivityLogin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         et_Email = (EditText) findViewById(R.id.et_Email);
+        phone = (EditText) findViewById(R.id.phone);
         et_Password = (EditText) findViewById(R.id.et_Password);
     }
 
@@ -57,6 +58,8 @@ public class ActivityLogin extends AppCompatActivity {
             Toast.makeText(this, "Please check your internet connection.", Toast.LENGTH_SHORT).show();
         } else if (et_Email.getText().toString().equals("")) {
             et_Email.setError("Email cannot be empty");
+        } else if (phone.getText().toString().equals("")) {
+            phone.setError("Phone number cannot be empty");
 
         } else if (et_Password.getText().toString().equals("")) {
             et_Password.setError("Password cannot be empty");
@@ -108,11 +111,11 @@ public class ActivityLogin extends AppCompatActivity {
                         finish();
                     } else {
                         pd.hide();
-                        Toast.makeText(ActivityLogin.this, "Incorecct email or password", Toast.LENGTH_LONG).show();
+                        Toast.makeText(ActivityLogin.this, "Incorrect email or password", Toast.LENGTH_LONG).show();
                     }
                 } else {
                     pd.hide();
-                    Toast.makeText(ActivityLogin.this, "Incorecct email or password", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ActivityLogin.this, "Incorrect email or password", Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException e) {
